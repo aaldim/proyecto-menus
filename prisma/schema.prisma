@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ClassifierType {
+  PRESENTATION
+  CATEGORY
+  SUBCATEGORY
+}
+
+enum WeekDay {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+model Client {
+  id        Int          @id @default(autoincrement())
+  name      String
+  email     String       @unique
+  menus     ClientMenu[]
+  createdAt DateTime     @default(now())
+  Invoice   Invoice[]
+}
+
+model ClientMenu {
+  id        Int     @id @default(autoincrement())
+  client    Client  @relation(fields: [clientId], references: [id])
+  clientId  Int
+  menu      Menu    @relation(fields: [menuId], references: [id])
+  menuId    Int
+  dayOfWeek WeekDay
+  totalCost Float   @default(0)
+}
+
+model Classifier {
+  id       Int            @id @default(autoincrement())
+  name     String
+  type     ClassifierType // Presentación, Categoría o Subcategoría
+  products Product[]
+}
+
+model Invoice {
+  id        Int               @id @default(autoincrement())
+  client    Client            @relation(fields: [clientId], references: [id])
+  clientId  Int
+  totalCost Float
+  createdAt DateTime          @default(now())
+  menuItems InvoiceMenuItem[]
+}
+
+model InvoiceMenuItem {
+  id         Int      @id @default(autoincrement())
+  invoice    Invoice  @relation(fields: [invoiceId], references: [id])
+  invoiceId  Int
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+  menuItemId Int
+  quantity   Int
+  totalCost  Float // Costo total de los insumos
+}
+
+model Menu {
+  id         Int          @id @default(autoincrement())
+  name       String
+  items      MenuItem[]
+  extraCost  Float        @default(0)
+  createdAt  DateTime     @default(now())
+  ClientMenu ClientMenu[]
+}
+
+model MenuItem {
+  id              Int               @id @default(autoincrement())
+  menu            Menu              @relation(fields: [menuId], references: [id])
+  menuId          Int
+  product         Product           @relation(fields: [productId], references: [id])
+  productId       Int
+  quantity        Int
+  cost            Float // Costo total del insumo (unitPrice * quantity)
+  InvoiceMenuItem InvoiceMenuItem[]
+}
+
+model PriceHistory {
+  id        Int      @id @default(autoincrement())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int
+  oldPrice  Float
+  newPrice  Float
+  changedBy String // Usuario que modificó el precio
+  changedAt DateTime @default(now())
+}
+
+model Product {
+  id           Int            @id @default(autoincrement())
+  description  String
+  costPrice    Float
+  unitPrice    Float
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  classifiers  Classifier[]
+  priceHistory PriceHistory[]
+  MenuItem     MenuItem[]
+}
