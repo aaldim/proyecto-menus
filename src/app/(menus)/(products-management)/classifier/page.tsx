@@ -37,7 +37,7 @@ export default async function ClasificadoresPage() {
                 <td className="py-3 px-6">{classifier.id}</td>
                 <td className="py-3 px-6">{classifier.name}</td>
                 <td className="py-3 px-6 flex justify-center">
-                    {/* Botón de Eliminar */}
+                    {/* // ! Botón de Eliminar */}
                   <ClassifierDeleteButton classifierId={classifier.id} />
                   {/* Botón de Editar */}
                   <a

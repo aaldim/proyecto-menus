@@ -30,6 +30,7 @@ export default async function ProductsPage() {
               <td className="py-2">{product.description}</td>
               <td className="py-2">{product.unitPrice}</td>
               <td className="py-2">
+                {/* // ! Componente adicional */}
                 {/* Pasamos el ID del producto al componente de botón */}
                 <ProductsButton productId={product.id} />
                 <a

@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { ClassifierType } from "@prisma/client";
 
 export async function getClassifiers() {
+  // ! ejemplo comandos de prisma para poder usar base de datos y sin necesidad de utilizar comandos SQL
   return await prisma.classifier.findMany();
 }
 

@@ -23,6 +23,7 @@ const menuItem = [
     title: "Dashboard",
     path: "/dashboard",
   },
+  // ! Esto es de la primera semana
   {
     icon: <IoCubeOutline />,
     title: "Gestión de Productos",
@@ -45,6 +46,7 @@ const menuItem = [
       },
     ],
   },
+  // TODO: Esto es lo que hay que trabajar
   {
     icon: <IoRestaurantOutline />,
     title: "Creación de Menús",
