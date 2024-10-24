@@ -55,12 +55,12 @@ const menuItem = [
       {
         icon: <IoAddCircleOutline />,
         title: "Nuevo Menú",
-        path: "/menus/new",
+        path: "/menus",
       },
       {
         icon: <IoListCircleOutline />,
         title: "Listar Menús",
-        path: "/menus",
+        path: "/menu-items",
       },
     ],
   },

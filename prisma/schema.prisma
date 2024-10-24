@@ -80,8 +80,10 @@ model Menu {
   items      MenuItem[]
   extraCost  Float        @default(0)
   createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
   ClientMenu ClientMenu[]
 }
+
 
 model MenuItem {
   id              Int               @id @default(autoincrement())
