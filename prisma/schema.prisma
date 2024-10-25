@@ -81,8 +81,10 @@ model Menu {
   extraCost  Float        @default(0)
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
+  isActive   Boolean      @default(true)  // Nuevo campo para activar/desactivar el menú
   ClientMenu ClientMenu[]
 }
+
 
 
 model MenuItem {

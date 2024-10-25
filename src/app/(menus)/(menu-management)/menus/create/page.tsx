@@ -1,3 +1,4 @@
+//src/app/(menus)/(menu-management)/menus/create/page.tsx
 import { createMenu } from "@/actions/menu-actions";
 import { redirect } from "next/navigation";
 

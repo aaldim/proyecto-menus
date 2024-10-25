@@ -1,28 +1,35 @@
+// src/app/api/menus/[id]/route.ts
 import { deleteMenu } from "@/actions/menu-actions";
 import { NextResponse } from "next/server";
+
 interface Segments {
   params: {
     id: string;
   };
 }
 
+// La ruta sigue siendo DELETE, pero solo desactiva el menú
 export async function DELETE(request: Request, { params }: Segments) {
-  const id = params.id;
+  const id = Number(params.id);
 
   if (!id) {
-    return NextResponse.json("ID de menu no proporcionado", { status: 400 });
+    return NextResponse.json(
+      { error: "ID de menú no proporcionado" },
+      { status: 400 }
+    );
   }
 
   try {
-    // Eliminar el producto por ID y verificar que pertenezca al usuario autenticado
-    await deleteMenu(Number(id));
-
-    return NextResponse.json("Menu eliminado con éxito", { status: 200 });
-  } catch (error) {
-    console.log(error);
+    await deleteMenu(id); // Desactiva el menú en lugar de eliminarlo
     return NextResponse.json(
-      { error: "Error al eliminar el menu" },
-      { status: 400 }
+      { message: "Menú desactivado con éxito" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error al desactivar el menú:", error);
+    return NextResponse.json(
+      { error: "Error al desactivar el menú" },
+      { status: 500 }
     );
   }
 }

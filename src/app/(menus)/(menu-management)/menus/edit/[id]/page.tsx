@@ -1,4 +1,4 @@
-// src/app/(menus)/(menu-management)/menus/edit/page.tsx
+// src/app/(menus)/(menu-management)/menus/edit/[id]/page.tsx
 import { getMenuById, updateMenu } from "@/actions/menu-actions";
 import { redirect } from "next/navigation";
 
