@@ -96,7 +96,9 @@ model MenuItem {
   quantity        Int
   cost            Float // Costo total del insumo (unitPrice * quantity)
   InvoiceMenuItem InvoiceMenuItem[]
+  isActive        Boolean           @default(true) // Agregamos el campo para manejar la desactivación
 }
+
 
 model PriceHistory {
   id        Int      @id @default(autoincrement())

@@ -1,7 +1,11 @@
+//src/components/menus/menu-button.tsx
+
 "use client";
+
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCrudAlerts } from "@/hooks/useCrudAlerts";
+import { IoTrashOutline } from "react-icons/io5"; // Importamos el ícono de eliminar
 
 interface MenuButtonProps {
   menuId: number;
@@ -24,12 +28,13 @@ export const MenuButton = ({ menuId }: MenuButtonProps) => {
 
     try {
       const res = await fetch(`/api/menus/${menuId}`, {
-        method: "DELETE", // Sigue siendo DELETE pero desactiva el menú
+        method: "DELETE", // Enviar la solicitud DELETE para desactivar el menú
       });
 
       if (res.ok) {
         await showSuccessAlert("Menú desactivado exitosamente.");
-        router.refresh(); // Refresca la página
+        // En lugar de refrescar toda la página, puedes manejar esto con un cambio de estado o redirigir a la lista
+        router.refresh(); // Esto solo refresca el componente actual, sin recargar toda la página
       } else {
         const errorData = await res.json();
         await showErrorAlert(errorData.error || "Error desconocido.");
@@ -44,13 +49,13 @@ export const MenuButton = ({ menuId }: MenuButtonProps) => {
 
   return (
     <button
-      className={`bg-red-500 text-white px-4 py-2 rounded-md mr-2 ${
-        isDeleting ? "opacity-50 cursor-not-allowed" : ""
-      }`}
       onClick={handleDelete}
+      className={`${
+        isDeleting ? "opacity-50 cursor-not-allowed" : "text-red-500"
+      }`}
       disabled={isDeleting}
     >
-      {isDeleting ? "Desactivando..." : "Eliminar"}
+      <IoTrashOutline size={24} className="hover:text-red-700 cursor-pointer" />
     </button>
   );
 };

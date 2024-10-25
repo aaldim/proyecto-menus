@@ -1,54 +1,58 @@
-// src/components/menu-items/menu-item-button.tsx
 "use client";
 
-import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css"; // Importamos el CSS de SweetAlert2
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useCrudAlerts } from "@/hooks/useCrudAlerts";
+import { IoTrashOutline } from "react-icons/io5"; // Importamos el ícono de eliminar
 
 interface MenuItemButtonProps {
   menuItemId: number;
 }
 
 export const MenuItemButton = ({ menuItemId }: MenuItemButtonProps) => {
-  const handleDelete = async () => {
-    const confirmResult = await Swal.fire({
-      title: "¿Estás seguro?",
-      text: "No podrás revertir esta acción",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
-    });
+  const router = useRouter();
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { showSuccessAlert, showErrorAlert, showConfirmationAlert } =
+    useCrudAlerts();
 
-    if (confirmResult.isConfirmed) {
+  const handleDelete = async () => {
+    const result = await showConfirmationAlert(
+      "¿Estás seguro de que deseas desactivar este elemento del menú?"
+    );
+
+    if (!result.isConfirmed) return;
+
+    setIsDeleting(true);
+
+    try {
       const res = await fetch(`/api/menu-items/${menuItemId}`, {
         method: "DELETE",
       });
 
       if (res.ok) {
-        Swal.fire(
-          "Eliminado",
-          "El elemento del menú ha sido eliminado.",
-          "success"
-        );
-        window.location.reload(); // Recargamos la página tras la eliminación
+        await showSuccessAlert("Elemento del menú desactivado exitosamente.");
+        router.refresh(); // Refresca la lista de items sin recargar toda la página
       } else {
-        Swal.fire(
-          "Error",
-          "Hubo un problema al eliminar el elemento.",
-          "error"
-        );
+        const errorData = await res.json();
+        await showErrorAlert(errorData.error || "Error desconocido.");
       }
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+      await showErrorAlert("Error de red al desactivar el elemento.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
   return (
     <button
-      className="bg-red-500 text-white px-4 py-2 rounded-md mr-2"
       onClick={handleDelete}
+      className={`${
+        isDeleting ? "opacity-50 cursor-not-allowed" : "text-red-500"
+      }`}
+      disabled={isDeleting}
     >
-      Eliminar
+      <IoTrashOutline size={24} className="hover:text-red-700 cursor-pointer" />
     </button>
   );
 };
