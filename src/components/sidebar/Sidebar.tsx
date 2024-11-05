@@ -15,7 +15,15 @@ import {
   IoTimeOutline,
   IoAddCircleOutline,
   IoListCircleOutline,
+  IoMenu,
+  IoClose,
 } from "react-icons/io5";
+
+// Define los tipos de las props
+interface SidebarProps {
+  isSidebarOpen: boolean;
+  toggleSidebar: () => void;
+}
 
 const menuItem = [
   {
@@ -23,11 +31,10 @@ const menuItem = [
     title: "Dashboard",
     path: "/dashboard",
   },
-  // ! Esto es de la primera semana
   {
     icon: <IoCubeOutline />,
     title: "Gestión de Productos",
-    path: "#", // No ruta directa, abre submenú
+    path: "#",
     subItems: [
       {
         icon: <IoCartOutline />,
@@ -46,21 +53,20 @@ const menuItem = [
       },
     ],
   },
-  // TODO: Esto es lo que hay que trabajar
   {
     icon: <IoRestaurantOutline />,
     title: "Creación de Menús",
-    path: "#", // No ruta directa, abre submenú
+    path: "#",
     subItems: [
       {
         icon: <IoAddCircleOutline />,
         title: "Nuevo Menú",
-        path: "/menus/new",
+        path: "/menus",
       },
       {
         icon: <IoListCircleOutline />,
         title: "Listar Menús",
-        path: "/menus",
+        path: "/menu-items",
       },
     ],
   },
@@ -72,7 +78,7 @@ const menuItem = [
   {
     icon: <IoCashOutline />,
     title: "Facturación Semanal",
-    path: "#", // No ruta directa, abre submenú
+    path: "#",
     subItems: [
       {
         icon: <IoCashOutline />,
@@ -103,11 +109,26 @@ const menuItem = [
   },
 ];
 
-export const Sidebar = async () => {
+export const Sidebar = ({ isSidebarOpen, toggleSidebar }: SidebarProps) => {
   return (
-    <aside className="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
-      <div>
-        <div className="-mx-6 px-6 py-4">
+    <>
+      {/* Solo renderizamos el botón de hamburguesa cuando el sidebar está cerrado */}
+      {!isSidebarOpen && (
+        <button
+          onClick={toggleSidebar}
+          className="fixed z-50 top-4 left-4 md:hidden bg-gray-200 p-2 rounded-md"
+        >
+          <IoMenu size={24} />
+        </button>
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed z-40 top-0 left-0 w-64 h-screen bg-white transition-transform duration-300 transform
+        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
+        md:relative md:translate-x-0 md:w-64 lg:w-64`}
+      >
+        <div className="flex justify-between items-center p-6">
           <Link href="/" title="home">
             <Image
               src="https://tailus.io/sources/blocks/stats-cards/preview/images/logo.svg"
@@ -117,6 +138,13 @@ export const Sidebar = async () => {
               height={50}
             />
           </Link>
+          {/* Botón de cerrar para pantallas pequeñas */}
+          <button
+            onClick={toggleSidebar}
+            className="md:hidden bg-gray-200 p-2 rounded-md"
+          >
+            <IoClose size={24} />
+          </button>
         </div>
 
         <ul className="space-y-2 tracking-wide mt-8">
@@ -124,7 +152,7 @@ export const Sidebar = async () => {
             <SidebarItem key={item.path} {...item} />
           ))}
         </ul>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 };
