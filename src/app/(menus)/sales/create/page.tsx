@@ -1,11 +1,10 @@
-// Mueve el "use server" afuera del componente
 "use server";
 
 import { createInvoice, getMenus } from "@/actions";
 import { redirect } from "next/navigation";
 
-export async function handleSubmit(formData: FormData) {
-  const menus = await getMenus(); // Cargar menús dentro de la función
+async function handleSubmit(formData: FormData) {
+  const menus = await getMenus();
   const menuId = parseFloat(formData.get("menuId") as string);
   const quantity = parseFloat(formData.get("quantity") as string);
 
@@ -31,7 +30,6 @@ export async function handleSubmit(formData: FormData) {
   } else {
     console.error("Client ID is undefined");
   }
-  redirect("/sales");
 }
 
 export default async function CrearMenuPage() {

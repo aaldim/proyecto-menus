@@ -2,7 +2,6 @@
 
 "use server";
 import prisma from "@/lib/prisma"; // Prisma cargado en el servidor
-import { Menu, WeekDay } from "@prisma/client";
 
 // Obtener solo los menús activos
 export async function getInvoices() {

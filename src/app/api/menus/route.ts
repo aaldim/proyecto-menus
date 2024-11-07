@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 // Esta función maneja las solicitudes POST para crear un nuevo menú
 export async function POST(request: Request) {
   try {
-    const { name, extraCost } = await request.json();
+    const { name, extraCost, clientId, dayOfWeek } = await request.json();
 
     // Validar que los campos estén presentes
     if (!name || extraCost == null) {
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     }
 
     // Crear el menú en la base de datos
-    await createMenu({ name, extraCost });
+    await createMenu({ name, extraCost, clientId, dayOfWeek });
 
     // Responder con éxito
     return NextResponse.json(

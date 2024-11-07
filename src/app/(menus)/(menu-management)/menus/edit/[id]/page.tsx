@@ -1,9 +1,7 @@
-import { deleteTotalMenuItem, getProducts } from "@/actions";
+import { getProducts } from "@/actions";
 import { getMenuById } from "@/actions/menu-actions";
 import { MenuForm } from "@/components";
-import { MenuItemButton } from "@/components/menu-items";
 import { redirect } from "next/navigation";
-import { IoTrashOutline } from "react-icons/io5";
 import { DeleteButton } from "./deleteButton";
 
 interface Props {
@@ -15,10 +13,6 @@ export default async function EditMenuPage({ params }: Props) {
   const menu = await getMenuById(parseInt(params.id, 10))
   if (!menu) {
     redirect('menu')
-  }
-  const DeleteMenuItem = async (menuId: number) => {
-    await deleteTotalMenuItem(menuId)
-    redirect(`/menus/edit/${menuId}`)
   }
   return (
     <>

@@ -7,8 +7,6 @@ import {
   IoRestaurantOutline,
   IoPeopleOutline,
   IoCashOutline,
-  IoSettingsOutline,
-  IoHelpCircleOutline,
   IoExitOutline,
   IoCartOutline,
   IoListOutline,

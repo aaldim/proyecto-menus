@@ -62,7 +62,12 @@ export async function PUT(request: Request, { params }: Segments) {
       );
     }
 
-    await updateMenu(id, { name, extraCost });
+    await updateMenu(id, {
+      name, extraCost,
+      id: 0,
+      createdAt: new Date(),
+      isActive: false
+    });
 
     return NextResponse.json(
       { message: "Menú actualizado con éxito" },
