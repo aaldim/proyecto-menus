@@ -71,37 +71,16 @@ const menuItem = [
     ],
   },
   {
+    icon: <IoCashOutline />,
+    title: "Ingreso de Ventas",
+    path: "/sales",
+  },
+  {
     icon: <IoPeopleOutline />,
     title: "Gestión de Clientes",
-    path: "/clientes",
+    path: "/clients",
   },
-  {
-    icon: <IoCashOutline />,
-    title: "Facturación Semanal",
-    path: "#",
-    subItems: [
-      {
-        icon: <IoCashOutline />,
-        title: "Generar Reportes",
-        path: "/facturacion/reportes",
-      },
-      {
-        icon: <IoTimeOutline />,
-        title: "Histórico de Facturas",
-        path: "/facturacion/historico",
-      },
-    ],
-  },
-  {
-    icon: <IoSettingsOutline />,
-    title: "Configuraciones",
-    path: "/configuraciones",
-  },
-  {
-    icon: <IoHelpCircleOutline />,
-    title: "Soporte",
-    path: "/soporte",
-  },
+
   {
     icon: <IoExitOutline />,
     title: "Salir",

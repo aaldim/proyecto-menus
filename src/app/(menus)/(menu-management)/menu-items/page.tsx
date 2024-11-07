@@ -1,10 +1,8 @@
 //src/app/(menus)/(menu-management)/menu-items/page.tsx
 
 import { getMenuItems } from "@/actions/menu-item-actions";
-import { MenuItemButton } from "@/components/menu-items/menu-item-button";
 import { MenuItem } from "@prisma/client";
 import Link from "next/link";
-import { IoPencilOutline } from "react-icons/io5"; // Icono de edición
 
 export default async function MenuItemsPage() {
   const menuItems: (MenuItem & {
@@ -29,7 +27,6 @@ export default async function MenuItemsPage() {
             <th className="py-2">Producto</th>
             <th className="py-2">Cantidad</th>
             <th className="py-2">Costo Total</th>
-            <th className="py-2">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -39,15 +36,6 @@ export default async function MenuItemsPage() {
               <td className="py-2">{menuItem.product.description}</td>
               <td className="py-2">{menuItem.quantity}</td>
               <td className="py-2">{menuItem.cost}</td>
-              <td className="py-2 flex justify-center items-center space-x-4">
-                <MenuItemButton menuItemId={menuItem.id} />
-                <Link href={`/menu-items/edit/${menuItem.id}`}>
-                  <IoPencilOutline
-                    size={24}
-                    className="text-blue-500 hover:text-blue-700 cursor-pointer"
-                  />
-                </Link>
-              </td>
             </tr>
           ))}
         </tbody>

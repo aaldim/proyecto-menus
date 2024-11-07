@@ -1,10 +1,9 @@
-import { deleteTotalMenuItem, getProducts } from "@/actions";
+import { getProducts } from "@/actions";
 import { getMenuById } from "@/actions/menu-actions";
 import { MenuForm } from "@/components";
 import { MenuItemButton } from "@/components/menu-items";
 import { redirect } from "next/navigation";
 import { IoTrashOutline } from "react-icons/io5";
-import { DeleteButton } from "./deleteButton";
 
 interface Props {
   params: { id: string };
@@ -14,11 +13,7 @@ export default async function EditMenuPage({ params }: Props) {
   const products = await getProducts();
   const menu = await getMenuById(parseInt(params.id, 10))
   if (!menu) {
-    redirect('menu')
-  }
-  const DeleteMenuItem = async (menuId: number) => {
-    await deleteTotalMenuItem(menuId)
-    redirect(`/menus/edit/${menuId}`)
+    redirect('dashboard')
   }
   return (
     <>
@@ -40,7 +35,8 @@ export default async function EditMenuPage({ params }: Props) {
               <td className="py-2">{menuItem.quantity}</td>
               <td className="py-2">{menuItem.product.unitPrice}</td>
               <td className="py-2 flex justify-center items-center space-x-4">
-              <DeleteButton menuItemId={menuItem.id} menuId={menu.id} />
+                <IoTrashOutline className=""/>
+                <MenuItemButton menuItemId={menuItem.product.id} />
               </td>
             </tr>
           ))}

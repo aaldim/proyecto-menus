@@ -59,7 +59,10 @@ model Invoice {
   id        Int               @id @default(autoincrement())
   client    Client            @relation(fields: [clientId], references: [id])
   clientId  Int
+  menu      Menu              @relation(fields: [menuId], references: [id])
+  menuId    Int
   totalCost Float
+  quantity  Int
   createdAt DateTime          @default(now())
   menuItems InvoiceMenuItem[]
 }
@@ -82,13 +85,14 @@ model Menu {
   createdAt  DateTime     @default(now())
   isActive   Boolean      @default(true) // Campo isActive para indicar si el menú está activo
   ClientMenu ClientMenu[]
+  Invoice    Invoice[]
 }
-
 
 model MenuItem {
   id              Int               @id @default(autoincrement())
   menu            Menu              @relation(fields: [menuId], references: [id])
   menuId          Int
+  isActive        Boolean           @default(true)
   product         Product           @relation(fields: [productId], references: [id])
   productId       Int
   quantity        Int

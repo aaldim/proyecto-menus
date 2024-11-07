@@ -2,6 +2,7 @@
 
 "use server";
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 // Obtener solo los items activos
 export async function getMenuItems() {
@@ -66,4 +67,23 @@ export async function deleteMenuItem(id: number) {
     where: { id },
     data: { isActive: false }, // Desactivar el item de menú
   });
+}
+
+export async function deleteTotalMenuItem(id: number) {
+  const deleteMenuItem =  await prisma.menuItem.delete({
+    where: { id },
+  });
+
+  revalidatePath("/menus");
+  return deleteMenuItem
+}
+
+
+export async function deleteTotalSale(id: number) {
+  const deleteMenuItem =  await prisma.invoice.delete({
+    where: { id },
+  });
+
+  revalidatePath("/sales");
+  return deleteMenuItem
 }

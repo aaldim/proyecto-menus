@@ -1,7 +1,6 @@
 //src/app/(menus)/(menu-management)/page.tsx
 import { getMenus } from "@/actions/menu-actions";
 import { MenuButton } from "@/components/menus";
-import { Menu } from "@prisma/client";
 import Link from "next/link";
 import { IoPencilOutline } from "react-icons/io5"; // Importamos el icono de edición
 
@@ -10,7 +9,9 @@ export default async function MenusPage({
 }: {
   isSidebarOpen: boolean;
 }) {
-  const menus: Menu[] = await getMenus(); // Obtener menús desde el servidor
+  const menus = await getMenus(); // Obtener menús desde el servidor
+
+  console.log(menus);
 
   return (
     <div className={`container mx-auto p-4 ${isSidebarOpen ? "md:ml-64" : ""}`}>
@@ -27,17 +28,27 @@ export default async function MenusPage({
           <tr>
             <th className="py-2">Nombre</th>
             <th className="py-2">Costo Extra</th>
+            <th className="py-2">Cliente</th>
+            <th className="py-2">Día de la Semana</th>
+            <th className="py-2">Costo por Menu</th>
             <th className="py-2">Acciones</th>
           </tr>
         </thead>
         <tbody>
           {menus.map((menu) => (
-            <tr key={menu.id} className="border-t">
-              <td className="py-2">{menu.name}</td>
-              <td className="py-2">{menu.extraCost}</td>
+            <tr key={menu.menu.id} className="border-t">
+              <td className="py-2">{menu.menu.name}</td>
+              <td className="py-2">{menu.menu.extraCost}</td>
+              <td className="py-2">{menu.client.name}</td>
+              <td className="py-2">{menu.dayOfWeek}</td>
+              <td className="py-2">
+                {menu.menu.items.reduce((acc, item) => {
+                  return acc + item.product.unitPrice * item.quantity;
+                }, 0)}
+              </td>
               <td className="py-2 flex justify-center items-center space-x-4">
-                <MenuButton menuId={menu.id} />
-                <Link href={`/menus/edit/${menu.id}`}>
+                <MenuButton menuId={menu.menu.id} />
+                <Link href={`/menus/edit/${menu.menu.id}`}>
                   <IoPencilOutline
                     size={24}
                     className="text-blue-500 hover:text-blue-700 cursor-pointer"
