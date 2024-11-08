@@ -1,14 +1,11 @@
-//src/app/(menus)/(menu-management)/page.tsx
+// src/app/(menus)/sales/page.tsx
 import { getInvoices } from "@/actions";
 import Link from "next/link";
 import { DeleteButton } from "./deleteButton";
 
-export default async function MenusPage({
-  isSidebarOpen,
-}: {
-  isSidebarOpen: boolean;
-}) {
-  const invoices = await getInvoices(); // Obtener menús desde el servidor
+export default async function SalesPage() {
+  const invoices = await getInvoices(); // Obtener las facturas desde el servidor
+  const isSidebarOpen = false; // Configuración interna de sidebar
 
   return (
     <div className={`container mx-auto p-4 ${isSidebarOpen ? "md:ml-64" : ""}`}>
@@ -38,7 +35,8 @@ export default async function MenusPage({
               <td className="py-2">{invoice.quantity}</td>
               <td className="py-2">{invoice.totalCost}</td>
               <td className="py-2 flex justify-center items-center space-x-4">
-              <DeleteButton saleId={invoice.id} /></td>
+                <DeleteButton saleId={invoice.id} />
+              </td>
             </tr>
           ))}
         </tbody>
