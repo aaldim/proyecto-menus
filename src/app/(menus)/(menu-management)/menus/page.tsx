@@ -4,17 +4,13 @@ import { MenuButton } from "@/components/menus";
 import Link from "next/link";
 import { IoPencilOutline } from "react-icons/io5"; // Importamos el icono de edición
 
-export default async function MenusPage({
-  isSidebarOpen,
-}: {
-  isSidebarOpen: boolean;
-}) {
+export default async function MenusPage() {
   const menus = await getMenus(); // Obtener menús desde el servidor
 
   console.log(menus);
 
   return (
-    <div className={`container mx-auto p-4 ${isSidebarOpen ? "md:ml-64" : ""}`}>
+    <div className={`container mx-auto p-4 ${true ? "md:ml-64" : ""}`}>
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Menús</h1>
         <Link href="/menus/create">

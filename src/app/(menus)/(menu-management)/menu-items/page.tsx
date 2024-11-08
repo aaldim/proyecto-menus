@@ -2,7 +2,6 @@
 
 import { getMenuItems } from "@/actions/menu-item-actions";
 import { MenuItem } from "@prisma/client";
-import Link from "next/link";
 
 export default async function MenuItemsPage() {
   const menuItems: (MenuItem & {
@@ -14,11 +13,6 @@ export default async function MenuItemsPage() {
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Elementos del Menú</h1>
-        <Link href="/menu-items/create">
-          <div className="bg-green-500 text-white px-4 py-2 rounded-md">
-            Agregar Elemento al Menú
-          </div>
-        </Link>
       </div>
       <table className="min-w-full text-center bg-white border border-gray-200 rounded-lg shadow-lg">
         <thead className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
