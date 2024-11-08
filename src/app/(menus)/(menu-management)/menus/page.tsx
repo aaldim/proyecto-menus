@@ -11,7 +11,7 @@ export default async function MenusPage() {
   console.log(menus);
 
   return (
-    <div className={`container mx-auto p-4 ${true ? "md:ml-64" : ""}`}>
+    <div className={`container mx-auto p-4 ${isSidebarOpen ? "md:ml-64" : ""}`}>
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Menús</h1>
         <Link href="/menus/create">

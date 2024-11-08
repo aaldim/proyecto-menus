@@ -8,7 +8,7 @@ export default async function SalesPage() {
   const isSidebarOpen = false; // Configuración interna de sidebar
 
   return (
-    <div className={`container mx-auto p-4 ${true ? "md:ml-64" : ""}`}>
+    <div className={`container mx-auto p-4 ${isSidebarOpen ? "md:ml-64" : ""}`}>
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Ventas</h1>
         <Link href="/sales/create">
