@@ -1,4 +1,4 @@
-//src/app/(menus)/(menu-management)/page.tsx
+// src/app/(menus)/(menu-management)/menus/page.tsx
 import { getMenus } from "@/actions/menu-actions";
 import { MenuButton } from "@/components/menus";
 import Link from "next/link";
@@ -6,6 +6,7 @@ import { IoPencilOutline } from "react-icons/io5"; // Importamos el icono de edi
 
 export default async function MenusPage() {
   const menus = await getMenus(); // Obtener menús desde el servidor
+  const isSidebarOpen = false; // Define si el sidebar está abierto aquí
 
   console.log(menus);
 
